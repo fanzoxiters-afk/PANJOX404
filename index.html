@@ -124,6 +124,11 @@
         .about-content { text-align: center; }
 
         ::-webkit-scrollbar { width: 0; }
+        /* === FORCE TAP EFFECT (MOBILE FIX) === */
+.press {
+    transform: scale(0.96) !important;
+    opacity: 0.9 !important;
+}
     </style>
 </head>
 <body>
@@ -218,23 +223,57 @@
         </div>
     </div>
 
-    <script>
-        function toggleNav() {
-            document.getElementById('side-menu').classList.toggle('open');
-            document.getElementById('side-overlay').classList.toggle('open');
-        }
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            toggleNav();
-        }
+    function toggleNav() {
+        document.getElementById('side-menu').classList.toggle('open');
+        document.getElementById('side-overlay').classList.toggle('open');
+    }
 
-        function startDownload() {
-            const linkDownload = "https://safefileku.com/download/msFnDWdVmzkzIHmd";
-            alert("Memulai pengunduhan CortexApps APK...");
-            window.location.href = linkDownload;
-        }
-    </script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        toggleNav();
+    }
+
+    function startDownload() {
+        const linkDownload = "https://safefileku.com/download/msFnDWdVmzkzIHmd";
+        alert("Memulai pengunduhan CortexApps APK...");
+        window.location.href = linkDownload;
+    }
+
+    /* === TAP / CLICK EFFECT FIX FOR MOBILE & WEBVIEW === */
+    const tapElements = document.querySelectorAll(
+        '.btn, .card, .nav-item, .menu-btn'
+    );
+
+    tapElements.forEach(el => {
+        el.addEventListener('touchstart', () => {
+            el.classList.add('press');
+        }, { passive: true });
+
+        el.addEventListener('touchend', () => {
+            el.classList.remove('press');
+        });
+
+        el.addEventListener('touchcancel', () => {
+            el.classList.remove('press');
+        });
+
+        // fallback desktop
+        el.addEventListener('mousedown', () => {
+            el.classList.add('press');
+        });
+        el.addEventListener('mouseup', () => {
+            el.classList.remove('press');
+        });
+        el.addEventListener('mouseleave', () => {
+            el.classList.remove('press');
+        });
+    });
+
+});
+</script>
 </body>
 </html>
