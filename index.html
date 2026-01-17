@@ -226,24 +226,25 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    function toggleNav() {
+    // ⬇️ EXPOSE KE GLOBAL
+    window.toggleNav = function () {
         document.getElementById('side-menu').classList.toggle('open');
         document.getElementById('side-overlay').classList.toggle('open');
     }
 
-    function showPage(pageId) {
+    window.showPage = function (pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         toggleNav();
     }
 
-    function startDownload() {
+    window.startDownload = function () {
         const linkDownload = "https://safefileku.com/download/msFnDWdVmzkzIHmd";
         alert("Memulai pengunduhan CortexApps APK...");
         window.location.href = linkDownload;
     }
 
-    /* === TAP / CLICK EFFECT FIX FOR MOBILE & WEBVIEW === */
+    /* === TAP / CLICK EFFECT FIX === */
     const tapElements = document.querySelectorAll(
         '.btn, .card, .nav-item, .menu-btn'
     );
@@ -261,13 +262,14 @@ document.addEventListener('DOMContentLoaded', () => {
             el.classList.remove('press');
         });
 
-        // fallback desktop
         el.addEventListener('mousedown', () => {
             el.classList.add('press');
         });
+
         el.addEventListener('mouseup', () => {
             el.classList.remove('press');
         });
+
         el.addEventListener('mouseleave', () => {
             el.classList.remove('press');
         });
